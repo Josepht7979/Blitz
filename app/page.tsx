@@ -7,7 +7,7 @@ type Entry = { name: string; score: number };
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
   easy:     { name: "Easy",     desc: "Sunday-school favourites", time: 10, color: "#2dd4bf" },
   med:      { name: "Medium",   desc: "For the regular reader",   time: 8,  color: "#ffd166" },
-  hard:     { name: "Hard",     desc: "Serious students only",    time: 7,  color: "#ff8c42" },
+  hard:     { name: "Hard",     desc: "Serious students only",    time: 10, color: "#ff8c42" },
   edifying: { name: "Edifying", desc: "Grow, don't just guess",   time: 20, color: "#8ab4ff" },
 };
 const RANKS = [
@@ -50,7 +50,7 @@ export default function Page() {
   useEffect(() => () => stopTimer(), []);
 
   async function loadBatch() {
-    const r = await fetch(`/api/questions?category=${cat}&count=20`);
+    const r = await fetch(`/api/questions?category=${cat}&count=20&_=${Date.now()}-${Math.random()}`, { cache: "no-store" });
     const j = await r.json();
     G.batch = j.questions || []; G.bi = 0;
   }
