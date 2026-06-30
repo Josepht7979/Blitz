@@ -12,5 +12,8 @@ export function GET(req: NextRequest) {
   if (!VALID.has(category)) {
     return NextResponse.json({ error: "Unknown category" }, { status: 400 });
   }
-  return NextResponse.json({ questions: getBatch(category, count) });
+  return NextResponse.json(
+    { questions: getBatch(category, count) },
+    { headers: { "Cache-Control": "no-store, max-age=0" } }
+  );
 }
