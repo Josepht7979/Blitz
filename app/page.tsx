@@ -5,10 +5,8 @@ type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: stri
 type Entry = { name: string; score: number };
 
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
-  easy:     { name: "Easy",     desc: "Sunday-school favourites", time: 10, color: "#2dd4bf" },
-  med:      { name: "Medium",   desc: "For the regular reader",   time: 8,  color: "#ffd166" },
-  hard:     { name: "Hard",     desc: "Serious students only",    time: 10, color: "#ff8c42" },
-  edifying: { name: "Edifying", desc: "Grow, don't just guess",   time: 20, color: "#8ab4ff" },
+  med:      { name: "Medium",   desc: "For the regular reader", time: 13, color: "#ffd166" },
+  edifying: { name: "Edifying", desc: "Grow, don't just guess", time: 25, color: "#8ab4ff" },
 };
 const RANKS = [
   { min: 0, e: "💨", n: "A Spark" }, { min: 1500, e: "🪵", n: "Kindling" },
