@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 const VALID = new Set(["easy", "med", "hard", "edifying"]);
 
-// GET /api/leaderboard?category=hard&group=&limit=10  -> top scores
+// GET /api/leaderboard?category=hard&group=&limit=20  -> top scores
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const category = searchParams.get("category") ?? "med";
@@ -15,17 +15,22 @@ export async function GET(req: NextRequest) {
   const limit = Math.min(100, Math.max(1, Number(searchParams.get("limit")) || 20));
   if (!VALID.has(category)) return NextResponse.json({ error: "Unknown category" }, { status: 400 });
 
-  // sorted set, highest first, with scores -> [member, score, member, score, ...]
-  const flat = (await redis.zrange(lbKey(category, group), 0, limit - 1, {
-    rev: true,
-    withScores: true,
-  })) as (string | number)[];
+  try {
+    // sorted set, highest first, with scores -> [member, score, member, score, ...]
+    const flat = (await redis.zrange(lbKey(category, group), 0, limit - 1, {
+      rev: true,
+      withScores: true,
+    })) as (string | number)[];
 
-  const entries: { name: string; score: number }[] = [];
-  for (let i = 0; i < flat.length; i += 2) {
-    entries.push({ name: String(flat[i]), score: Number(flat[i + 1]) });
+    const entries: { name: string; score: number }[] = [];
+    for (let i = 0; i < flat.length; i += 2) {
+      entries.push({ name: String(flat[i]), score: Number(flat[i + 1]) });
+    }
+    return NextResponse.json({ category, group: group ?? "global", entries });
+  } catch (e) {
+    // Redis unreachable (e.g. missing/invalid Upstash env vars) — don't 500.
+    return NextResponse.json({ category, entries: [], error: "store_unavailable" });
   }
-  return NextResponse.json({ category, group: group ?? "global", entries });
 }
 
 // POST /api/leaderboard  { name, score, category, group? } -> submit
@@ -44,18 +49,20 @@ export async function POST(req: NextRequest) {
   const v = validateName(body?.name);
   if (!v.ok) return NextResponse.json({ error: v.reason }, { status: 400 });
 
-  // anti-spam: 10 submissions / minute / IP (fails open if Redis hiccups)
   try {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
     const { success } = await submitLimiter.limit(ip);
     if (!success) return NextResponse.json({ error: "Slow down a moment." }, { status: 429 });
-  } catch { /* ignore limiter errors */ }
+  } catch { /* limiter offline -> allow */ }
 
-  const key = lbKey(category, group);
-  // keep each player's BEST score only (member = name, update only if greater)
-  await redis.zadd(key, { gt: true }, { score, member: v.name });
-
-  // compute rank (0-based -> 1-based). zrevrank may be null if just trimmed.
-  const rank = await redis.zrevrank(key, v.name);
-  return NextResponse.json({ ok: true, name: v.name, score, rank: rank === null ? null : rank + 1 });
+  try {
+    const key = lbKey(category, group);
+    // keep each player's BEST score only (member = name, update only if greater)
+    await redis.zadd(key, { gt: true }, { score, member: v.name });
+    const rank = await redis.zrevrank(key, v.name);
+    return NextResponse.json({ ok: true, name: v.name, score, rank: rank === null ? null : rank + 1 });
+  } catch (e) {
+    // Redis unreachable — report cleanly instead of 500 so the client can react.
+    return NextResponse.json({ ok: false, error: "store_unavailable" }, { status: 200 });
+  }
 }
