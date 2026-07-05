@@ -184,7 +184,7 @@ export default function Page() {
     <div className="app start">
       <div className="flame-logo">🔥</div>
       <h1 className="brand">Scripture Blitz</h1>
-      <p className="tag">How well — and how fast — do you know the Word?</p>
+      <p className="tag">How well do you know the Word?</p>
       <div className="field">
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
         <input id="nm" className="nameInput" maxLength={16} value={name}

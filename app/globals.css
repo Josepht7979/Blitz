@@ -22,7 +22,7 @@ body{
 h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
   background:linear-gradient(135deg,var(--flame2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .flame-logo{font-size:3.6rem;text-align:center;}
-.tag{color:var(--muted);text-align:center;margin:2px auto 10px;line-height:1.4;max-width:19ch;text-wrap:balance;}
+.tag{color:var(--muted);text-align:center;margin:2px auto 12px;line-height:1.4;white-space:nowrap;}
 .btn{font-family:Inter;font-weight:700;font-size:1rem;color:#3a1c04;
   background:linear-gradient(135deg,var(--flame1),var(--flame2));border:0;border-radius:14px;
   padding:15px 18px;cursor:pointer;width:100%;box-shadow:0 8px 20px rgba(255,140,66,.32);}
