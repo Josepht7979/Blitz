@@ -54,6 +54,40 @@ function sampleExcept(arr: string[], n: number, exclude: string): string[] {
   return shuffle(arr.filter((x) => x !== exclude)).slice(0, n);
 }
 
+// --- Distractor helpers ---------------------------------------------------
+// The goal: make "complete the verse" options grammatically parallel so grammar
+// alone can't eliminate them. Wrong options share the answer's word-ending
+// (tense/part-of-speech signal) or are same-category (numbers), forcing recall.
+const NUMBERS = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","forty","fifty","seventy","hundred","thousand"];
+
+function endSig(w: string): string {
+  const s = w.toLowerCase();
+  if (/eth$/.test(s)) return "eth";
+  if (/ing$/.test(s)) return "ing";
+  if (/est$/.test(s)) return "est";
+  if (/ed$/.test(s)) return "ed";
+  if (/ness$/.test(s)) return "ness";
+  if (/ions?$/.test(s)) return "ion";
+  if (/ly$/.test(s)) return "ly";
+  if (/ful$/.test(s)) return "ful";
+  if (/s$/.test(s)) return "s";
+  return s.slice(-2);
+}
+const BY_END: Record<string, string[]> = {};
+for (const w of VOCAB) { const k = endSig(w); (BY_END[k] ||= []).push(w); }
+
+function distractorsFor(answer: string): string[] {
+  const a = answer.toLowerCase();
+  if (NUMBERS.includes(a)) return sampleExcept(NUMBERS, 3, a);
+  const pool = (BY_END[endSig(a)] || []).filter((w) => w.toLowerCase() !== a);
+  let d = shuffle(pool.slice()).slice(0, 3);
+  if (d.length < 3) {
+    const extra = sampleExcept(VOCAB.filter((w) => Math.abs(w.length - a.length) <= 2), 3 - d.length, a);
+    d = [...new Set([...d, ...extra])].slice(0, 3);
+  }
+  return d;
+}
+
 function genBookId(): Question | null {
   const v = pick(VERSES);
   const d = sampleExcept(BOOKS, 3, v.book);
@@ -69,25 +103,28 @@ function genBookId(): Question | null {
 }
 
 function genComplete(): Question | null {
-  const v = pick(VERSES);
-  const words = v.text.split(/\s+/);
-  const cands = words
-    .map((w, i) => ({ w, i, clean: w.toLowerCase().replace(/[^a-z']/g, "") }))
-    .filter((x) => x.clean.length >= 5 && !STOP.has(x.clean));
-  if (!cands.length) return null;
-  const c = pick(cands);
-  const answer = c.w.replace(/[^A-Za-z']/g, "");
-  const d = sampleExcept(VOCAB, 3, c.clean);
-  if (d.length < 3) return null;
-  const blanked = words.map((w, i) => (i === c.i ? "_____" : w)).join(" ");
-  const o = shuffle([answer, ...d]);
-  return {
-    q: "Complete the verse:",
-    verse: `\u201C${blanked}\u201D`,
-    o, a: o.indexOf(answer),
-    c: "Scripture", n: `The word is "${answer}".`,
-    ref: `${v.book} ${v.chapter}:${v.verse}`, generated: true,
-  };
+  for (let tries = 0; tries < 8; tries++) {
+    const v = pick(VERSES);
+    const words = v.text.split(/\s+/);
+    const cands = words
+      .map((w, i) => ({ w, i, clean: w.toLowerCase().replace(/[^a-z']/g, "") }))
+      .filter((x) => x.clean.length >= 5 && !STOP.has(x.clean));
+    if (!cands.length) continue;
+    const c = pick(cands);
+    const answer = c.w.replace(/[^A-Za-z']/g, "");
+    const d = distractorsFor(answer);              // grammatically-parallel wrong options
+    if (d.length < 3) continue;
+    const blanked = words.map((w, i) => (i === c.i ? "_____" : w)).join(" ");
+    const o = shuffle([answer, ...d]);
+    return {
+      q: "Complete the verse:",
+      verse: `\u201C${blanked}\u201D`,
+      o, a: o.indexOf(answer),
+      c: "Scripture", n: `The word is "${answer}".`,
+      ref: `${v.book} ${v.chapter}:${v.verse}`, generated: true,
+    };
+  }
+  return null;
 }
 
 function genFillName(): Question | null {
@@ -124,18 +161,23 @@ export function refOf(q: Question): string {
   return q.ref || q.r || q.verse || q.q;
 }
 
+/** Weighted pick — favors knowledge-based formats over verse-completion. */
+function pickGenerated(): Question | null {
+  const r = Math.random();
+  if (r < 0.42) return genBookId();    // recognize the source book
+  if (r < 0.78) return genFillName();  // name / place recall
+  return genComplete();                // verse recall (parallel distractors)
+}
+
 /** Returns a fresh batch, optionally excluding questions this account has already seen. */
 export function getBatch(category: string, count = 12, exclude?: Set<string>): Question[] {
   const curatedPool = CURATED[category] ?? CURATED["med"];
-  // "The Word" (med) is drawn almost entirely from the full-Bible generated pool
-  // (three question formats). Edifying stays 100% curated by design.
   const genChance = category === "med" || category === "hard" ? 0.9 : 0;
-  const gens = [genBookId, genComplete, genFillName];
   const out: Question[] = [];
   const used = new Set<string>();
   let guard = 0;
   while (out.length < count && guard++ < count * 40) {
-    const item: Question | null = Math.random() < genChance ? pick(gens)() : pick(curatedPool);
+    const item: Question | null = Math.random() < genChance ? pickGenerated() : pick(curatedPool);
     if (!item) continue;
     const key = refOf(item);
     if (used.has(key)) continue;                 // no duplicate within a batch
@@ -143,12 +185,11 @@ export function getBatch(category: string, count = 12, exclude?: Set<string>): Q
     used.add(key);
     out.push(item);
   }
-  // If the unseen pool is exhausted (finite categories like Edifying once an
-  // account has seen most of it), top up with repeats so the batch is always
-  // full — this keeps the round flowing instead of shrinking and stalling.
+  // If the unseen pool is exhausted (finite categories once an account has seen
+  // most of it), top up with repeats so the batch is always full and flows.
   let g2 = 0;
   while (out.length < count && g2++ < count * 20) {
-    const item: Question | null = Math.random() < genChance ? pick(gens)() : pick(curatedPool);
+    const item: Question | null = Math.random() < genChance ? pickGenerated() : pick(curatedPool);
     if (!item) continue;
     const key = refOf(item);
     if (used.has(key)) continue;
