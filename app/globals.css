@@ -16,11 +16,13 @@ body{
   min-height:100%;display:flex;align-items:center;justify-content:center;
 }
 .app{width:100%;max-width:480px;min-height:100dvh;display:flex;flex-direction:column;padding:18px;gap:12px;position:relative;}
+.app.start{justify-content:center;gap:15px;padding-bottom:32px;}
+.app.start .cats{margin-top:4px;}
 .brand{font-family:Cinzel,serif;letter-spacing:.05em;}
 h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
   background:linear-gradient(135deg,var(--flame2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .flame-logo{font-size:3.6rem;text-align:center;}
-.tag{color:var(--muted);text-align:center;margin-bottom:8px;}
+.tag{color:var(--muted);text-align:center;margin:2px auto 10px;line-height:1.4;max-width:19ch;text-wrap:balance;}
 .btn{font-family:Inter;font-weight:700;font-size:1rem;color:#3a1c04;
   background:linear-gradient(135deg,var(--flame1),var(--flame2));border:0;border-radius:14px;
   padding:15px 18px;cursor:pointer;width:100%;box-shadow:0 8px 20px rgba(255,140,66,.32);}

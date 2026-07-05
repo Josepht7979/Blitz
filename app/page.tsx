@@ -181,16 +181,16 @@ export default function Page() {
 
   /* ---------- render ---------- */
   if (screen === "start") return (
-    <div className="app">
+    <div className="app start">
       <div className="flame-logo">🔥</div>
       <h1 className="brand">Scripture Blitz</h1>
       <p className="tag">How well — and how fast — do you know the Word?</p>
       <div className="field">
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
         <input id="nm" className="nameInput" maxLength={16} value={name}
-          onChange={(e) => { setName(e.target.value); setNameErr(""); }} placeholder="e.g. Joe T" />
+          onChange={(e) => { setName(e.target.value); setNameErr(""); }} />
       </div>
-      <div className="err">{nameErr}</div>
+      {nameErr && <div className="err">{nameErr}</div>}
       <div className="cats">
         {Object.entries(CATS).map(([k, c]) => (
           <button key={k} className={"cat" + (k === cat ? " sel" : "")} style={{ ["--accent" as any]: c.color }} onClick={() => setCat(k)}>
@@ -198,9 +198,8 @@ export default function Page() {
           </button>
         ))}
       </div>
-      <button className="btn" onClick={tryStart}>Start the run</button>
+      <button className="btn" onClick={tryStart}>START</button>
       <button className="btn ghost" onClick={() => openBoard(cat)}>🏆 Leaderboards</button>
-      <p className="footnote">Medium &amp; Hard mix in freshly generated questions, so the pool never runs dry.</p>
     </div>
   );
 
