@@ -57,7 +57,7 @@ h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
 .chip.gen{background:rgba(59,130,246,.12);color:var(--edify);border-color:rgba(59,130,246,.45);}
 .chip.gold{background:linear-gradient(135deg,var(--gold),var(--flame2));color:#2a1c05;border-color:transparent;font-weight:800;}
 .question{font-size:1.35rem;font-weight:700;line-height:1.3;color:var(--ink);}
-.verse{display:block;font-family:Cinzel,serif;font-weight:600;font-size:1.05rem;color:var(--gold);margin-top:8px;line-height:1.4;}
+.verse{display:block;font-family:Georgia,'Times New Roman',serif;font-weight:600;font-size:1.08rem;color:#3730a3;margin-top:8px;line-height:1.45;}
 .opts{display:grid;gap:10px;}
 .opt{text-align:left;font-weight:600;font-size:1rem;color:var(--ink);background:var(--card);border:1.5px solid var(--line);
   border-radius:12px;padding:14px 16px;cursor:pointer;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow);}
