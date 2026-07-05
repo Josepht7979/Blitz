@@ -5,7 +5,7 @@ type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: stri
 type Entry = { name: string; score: number };
 
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
-  med:      { name: "The Word", desc: "For the regular reader", time: 25, color: "#ffd166" },
+  med:      { name: "The Word", desc: "For the regular reader", time: 20, color: "#ffd166" },
   edifying: { name: "Edifying", desc: "Grow, don't just guess", time: 25, color: "#8ab4ff" },
 };
 const RANKS = [
@@ -92,7 +92,7 @@ export default function Page() {
       G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}`;
     }
     force();
-    const wait = correct ? (cat === "edifying" ? 1400 : 850) : 1600;
+    const wait = correct ? (cat === "edifying" ? 1600 : 1200) : 1900;
     setTimeout(() => { G.lives <= 0 ? gameOver() : nextQuestion(); }, wait);
   }
 
@@ -197,9 +197,13 @@ export default function Page() {
           <div className="question">{c.q}{c.verse && <span className="verse">{c.verse}</span>}</div>
           <div className="opts">
             {c.o.map((t, i) => {
-              let cls = "opt";
-              if (G.locked) { if (i === c.a) cls += " correct"; else if (i === G.chosen) cls += " wrong"; else cls += " dim"; }
-              return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span>{t}</span></button>;
+              let cls = "opt"; let mark = "";
+              if (G.locked) {
+                if (i === c.a) { cls += " correct"; mark = "\u2713"; }
+                else if (i === G.chosen) { cls += " wrong"; mark = "\u2717"; }
+                else cls += " dim";
+              }
+              return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span className="opt-text">{t}</span>{mark && <span className="mark">{mark}</span>}</button>;
             })}
           </div>
           <div className="note" dangerouslySetInnerHTML={{ __html: G.note || "&nbsp;" }} />
