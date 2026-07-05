@@ -119,27 +119,40 @@ function genFillName(): Question | null {
   return null;
 }
 
-/** Returns a fresh batch for a category. Med/Hard mix in generated questions. */
-export function getBatch(category: string, count = 12): Question[] {
+/** Canonical identity of a question (verse reference where possible). */
+export function refOf(q: Question): string {
+  return q.ref || q.r || q.verse || q.q;
+}
+
+/** Returns a fresh batch, optionally excluding questions this account has already seen. */
+export function getBatch(category: string, count = 12, exclude?: Set<string>): Question[] {
   const curatedPool = CURATED[category] ?? CURATED["med"];
   // "The Word" (med) is drawn almost entirely from the full-Bible generated pool
-  // (three question formats) so a repeat player rarely sees the same question
-  // twice. Edifying stays 100% curated by design.
+  // (three question formats). Edifying stays 100% curated by design.
   const genChance = category === "med" || category === "hard" ? 0.9 : 0;
   const gens = [genBookId, genComplete, genFillName];
   const out: Question[] = [];
   const used = new Set<string>();
   let guard = 0;
-  while (out.length < count && guard++ < count * 25) {
-    let item: Question | null = null;
-    if (Math.random() < genChance) {
-      item = pick(gens)();
-    } else {
-      item = pick(curatedPool);
-      if (used.has(item.q)) item = null; // avoid dup curated within a batch
-    }
+  while (out.length < count && guard++ < count * 40) {
+    const item: Question | null = Math.random() < genChance ? pick(gens)() : pick(curatedPool);
     if (!item) continue;
-    if (!item.generated) used.add(item.q);
+    const key = refOf(item);
+    if (used.has(key)) continue;                 // no duplicate within a batch
+    if (exclude && exclude.has(key)) continue;   // skip anything this account has seen
+    used.add(key);
+    out.push(item);
+  }
+  // If the unseen pool is exhausted (finite categories like Edifying once an
+  // account has seen most of it), top up with repeats so the batch is always
+  // full — this keeps the round flowing instead of shrinking and stalling.
+  let g2 = 0;
+  while (out.length < count && g2++ < count * 20) {
+    const item: Question | null = Math.random() < genChance ? pick(gens)() : pick(curatedPool);
+    if (!item) continue;
+    const key = refOf(item);
+    if (used.has(key)) continue;
+    used.add(key);
     out.push(item);
   }
   return out;
