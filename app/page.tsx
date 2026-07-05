@@ -45,6 +45,7 @@ export default function Page() {
     batch: [] as Q[], bi: 0, note: "", place: null as number | null,
     seen: new Set<string>(),   // questions shown this session (persists across rounds)
     acct: "", shown: [] as string[],   // account id + refs shown this run (reported at game over)
+    pending: null as Promise<Q[]> | null,   // background-prefetched next batch
   }).current;
 
   const [remaining, setRemaining] = useState(1);
@@ -66,16 +67,30 @@ export default function Page() {
   }
   useEffect(() => () => stopTimer(), []);
 
-  async function loadBatch() {
-    const r = await fetch(`/api/questions?category=${cat}&count=20&acct=${encodeURIComponent(G.acct)}&_=${Date.now()}-${Math.random()}`, { cache: "no-store" });
-    const j = await r.json();
-    G.batch = j.questions || []; G.bi = 0;
+  async function fetchBatch(): Promise<Q[]> {
+    try {
+      const r = await fetch(`/api/questions?category=${cat}&count=25&acct=${encodeURIComponent(G.acct)}&_=${Date.now()}-${Math.random()}`, { cache: "no-store" });
+      const j = await r.json();
+      return (j.questions as Q[]) || [];
+    } catch { return []; }
+  }
+
+  async function ensureBatch() {
+    if (G.bi >= G.batch.length) {
+      const next = G.pending || fetchBatch();
+      G.pending = null;
+      G.batch = await next;
+      G.bi = 0;
+    }
+    // prefetch the next batch before the current one runs out (no stall)
+    if (!G.pending && G.batch.length - G.bi <= 6) G.pending = fetchBatch();
   }
 
   async function startRun() {
     G.score = 0; G.lives = 3; G.maxLives = 3; G.combo = 0; G.bestCombo = 0;
     G.answered = 0; G.correct = 0; G.locked = false; G.place = null; G.shown = [];
-    await loadBatch();
+    G.batch = []; G.bi = 0; G.pending = null;
+    await ensureBatch();
     setScreen("game");
     nextQuestion();
   }
@@ -86,17 +101,14 @@ export default function Page() {
     if (G.lives <= 0) return gameOver();
     // find the next question this player hasn't already seen this session
     let q: Q | null = null, tries = 0;
-    while (!q && tries++ < 50) {
-      if (G.bi >= G.batch.length) await loadBatch();
+    while (!q && tries++ < 60) {
+      await ensureBatch();
       const cand = G.batch[G.bi++];
-      if (!cand) continue;
+      if (!cand) break;
       if (G.seen.has(qKey(cand))) continue;
       q = cand;
     }
-    if (!q) { // whole pool exhausted this session — allow a repeat rather than stall
-      if (G.bi >= G.batch.length) await loadBatch();
-      q = G.batch[G.bi++] || null;
-    }
+    if (!q) { await ensureBatch(); q = G.batch[G.bi++] || null; }
     G.cur = q;
     if (q) { G.seen.add(qKey(q)); G.shown.push(refOf(q)); }
     G.locked = false; G.chosen = -1; G.note = "";
@@ -126,7 +138,7 @@ export default function Page() {
       G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}`;
     }
     force();
-    const wait = correct ? (cat === "edifying" ? 1600 : 1200) : 1900;
+    const wait = correct ? 1100 : 1800;
     setTimeout(() => { G.lives <= 0 ? gameOver() : nextQuestion(); }, wait);
   }
 
