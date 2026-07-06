@@ -1,5 +1,6 @@
 import curated from "@/data/questions.curated.json";
 import bible from "@/data/bible.json";
+import { pointerForGenerated } from "@/lib/pointers";
 
 // To go from ~hundreds to tens of thousands of questions, replace
 // data/bible.json with a full public-domain Bible (WEB or KJV). The generators
@@ -14,6 +15,7 @@ export type Question = {
   n: string;
   ref?: string;
   r?: string;          // reflection line (edifying)
+  p?: string;          // pointer: a short fun-fact / learning / context line
   generated?: boolean;
 };
 
@@ -164,9 +166,12 @@ export function refOf(q: Question): string {
 /** Weighted pick — favors knowledge-based formats over verse-completion. */
 function pickGenerated(): Question | null {
   const r = Math.random();
-  if (r < 0.42) return genBookId();    // recognize the source book
-  if (r < 0.78) return genFillName();  // name / place recall
-  return genComplete();                // verse recall (parallel distractors)
+  let item: Question | null;
+  if (r < 0.42) item = genBookId();         // recognize the source book
+  else if (r < 0.78) item = genFillName();  // name / place recall
+  else item = genComplete();                // verse recall (parallel distractors)
+  if (item && !item.p) item.p = pointerForGenerated(item);  // fun-fact / context line
+  return item;
 }
 
 /** Returns a fresh batch, optionally excluding questions this account has already seen. */
