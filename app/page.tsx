@@ -217,9 +217,7 @@ export default function Page() {
   /* ---------- render ---------- */
   if (screen === "start") return (
     <div className="app start">
-      <div className="flame-logo">📖 🤺</div>
-      <h1 className="brand">Word Warriors</h1>
-      <p className="tag">How well do you know the Word?</p>
+      <img src="/word-warriors.jpg" alt="Word Warriors — how well do you know the Word?" className="logo-img" />
       <div className="field">
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
         <input id="nm" className="nameInput" maxLength={16} value={name}

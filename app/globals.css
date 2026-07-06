@@ -22,6 +22,7 @@ body{
 h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
   background:linear-gradient(135deg,var(--flame2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .flame-logo{font-size:3.6rem;text-align:center;}
+.logo-img{display:block;width:100%;max-width:420px;height:auto;margin:0 auto 8px;border-radius:16px;box-shadow:0 14px 34px rgba(30,22,12,.22);}
 .tag{color:var(--muted);text-align:center;margin:2px auto 12px;line-height:1.4;white-space:nowrap;}
 .btn{font-family:Inter;font-weight:700;font-size:1rem;color:#3a1c04;
   background:linear-gradient(135deg,var(--flame1),var(--flame2));border:0;border-radius:14px;
@@ -79,7 +80,6 @@ h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
 .opt.dim{opacity:.4;}
 .note{text-align:left;color:var(--ink);font-size:.92rem;line-height:1.5;background:#fff;border:1px solid var(--line);border-left:4px solid var(--flame2);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);}
 .note b{color:var(--gold);} .note .ref{color:#3730a3;font-style:italic;}
-.note .pointer{display:block;margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);font-size:.82rem;font-style:italic;color:#6b6357;line-height:1.4;}
 .center{text-align:center;}
 .rank-emoji{font-size:3rem;} .rank-name{font-family:Cinzel,serif;font-weight:800;font-size:1.5rem;color:var(--gold);}
 .final{font-family:Anton;font-size:3.8rem;line-height:.9;}
