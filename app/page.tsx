@@ -16,9 +16,25 @@ const RANKS = [
 
 const refOf = (q: Q) => q.ref || q.r || q.verse || q.q;
 
+// Name + code -> short opaque account id (not a password, just an identifier so
+// a player's "already seen" history follows the same name+code across devices).
+function makeAcct(name: string, code: string): string {
+  const s = name.trim().toLowerCase() + "|" + code.trim();
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return ((h2 >>> 0).toString(36) + (h1 >>> 0).toString(36)).slice(0, 20);
+}
+
 export default function Page() {
   const [screen, setScreen] = useState<"start" | "game" | "over" | "board">("start");
   const [name, setName] = useState("");
+  const [code, setCode] = useState("");
   const [nameErr, setNameErr] = useState("");
   const [cat, setCat] = useState("med");
   const [, force] = useReducer((x) => x + 1, 0);
@@ -28,7 +44,8 @@ export default function Page() {
     score: 0, lives: 3, maxLives: 3, combo: 0, bestCombo: 0, answered: 0, correct: 0,
     cur: null as Q | null, locked: false, golden: false, chosen: -1,
     batch: [] as Q[], bi: 0, note: "", place: null as number | null,
-    seen: new Set<string>(),   // questions shown this session (no repeats until reload)
+    seen: new Set<string>(),   // shown this session (fast local dedup)
+    acct: "", shown: [] as string[],   // account id + refs shown this run (persisted at game over)
     pending: null as Promise<Q[]> | null,   // background-prefetched next batch
   }).current;
 
@@ -56,7 +73,7 @@ export default function Page() {
 
   async function fetchBatch(): Promise<Q[]> {
     try {
-      const r = await fetch(`/api/questions?category=${cat}&count=25&_=${Date.now()}-${Math.random()}`, { cache: "no-store" });
+      const r = await fetch(`/api/questions?category=${cat}&count=25&acct=${encodeURIComponent(G.acct)}&_=${Date.now()}-${Math.random()}`, { cache: "no-store" });
       const j = await r.json();
       return (j.questions as Q[]) || [];
     } catch { return []; }
@@ -75,7 +92,7 @@ export default function Page() {
 
   async function startRun() {
     G.score = 0; G.lives = 3; G.maxLives = 3; G.combo = 0; G.bestCombo = 0;
-    G.answered = 0; G.correct = 0; G.locked = false; G.place = null;
+    G.answered = 0; G.correct = 0; G.locked = false; G.place = null; G.shown = [];
     G.batch = []; G.bi = 0; G.pending = null;
     await ensureBatch();
     setScreen("game");
@@ -97,7 +114,7 @@ export default function Page() {
     }
     if (!q) { await ensureBatch(); q = G.batch[G.bi++] || null; }
     G.cur = q;
-    if (q) G.seen.add(qKey(q));
+    if (q) { G.seen.add(qKey(q)); G.shown.push(refOf(q)); }
     G.locked = false; G.chosen = -1; G.note = "";
     G.golden = cat !== "edifying" && G.combo > 0 && G.combo % 5 === 0;
     setRemaining(secs() * 1000);
@@ -139,6 +156,15 @@ export default function Page() {
   async function gameOver() {
     stopTimer();
     setScreen("over"); force();
+    // persist what this account has now seen so future visits skip them
+    if (G.acct && G.shown.length) {
+      const refs = G.shown.slice();
+      G.shown = [];
+      fetch("/api/seen", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ acct: G.acct, category: cat, refs }),
+      }).catch(() => {});
+    }
     if (G.score > 0) {
       try {
         const r = await fetch("/api/leaderboard", {
@@ -154,7 +180,9 @@ export default function Page() {
   function tryStart() {
     const t = name.trim();
     if (t.length < 2) { setNameErr("Enter a name (2+ characters)."); return; }
+    if (code.trim().length < 4) { setNameErr("Enter a code (4+ characters) so we can skip questions you've seen."); return; }
     setNameErr("");
+    G.acct = makeAcct(name, code);
     startRun();
   }
 
@@ -200,6 +228,11 @@ export default function Page() {
         <input id="nm" className="nameInput" maxLength={16} value={name}
           onChange={(e) => { setName(e.target.value); setNameErr(""); }} />
       </div>
+      <div className="field" style={{ marginTop: 8 }}>
+        <label htmlFor="cd">Your code (use the same one each time)</label>
+        <input id="cd" className="nameInput" type="password" maxLength={24} value={code}
+          onChange={(e) => { setCode(e.target.value); setNameErr(""); }} />
+      </div>
       {nameErr && <div className="err">{nameErr}</div>}
       <div className="cats">
         {Object.entries(CATS).map(([k, c]) => (
@@ -234,6 +267,7 @@ export default function Page() {
             {G.golden && <span className="chip gold">✦ Golden Verse · 2×</span>}
           </div>
           <div className="question">{c.q}{c.verse && <span className="verse">{c.verse}</span>}</div>
+          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
           <div className="opts">
             {c.o.map((t, i) => {
               let cls = "opt"; let mark = "";
@@ -245,11 +279,10 @@ export default function Page() {
               return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span className="opt-text">{t}</span>{mark && <span className="mark">{mark}</span>}</button>;
             })}
           </div>
-          <div className="note" dangerouslySetInnerHTML={{ __html: G.note || "&nbsp;" }} />
           {G.locked && (
             <div className="nextwrap">
-              <span className="nextlabel">Next question…</span>
-              <div className="nextbar"><div style={{ width: `${revealPct}%` }} /></div>
+              <span className="nextlabel">Next question in…</span>
+              <div className="nextbar"><div style={{ width: `${100 - revealPct}%` }} /></div>
             </div>
           )}
         </div>
