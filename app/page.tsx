@@ -1,7 +1,7 @@
 "use client";
 import { useReducer, useRef, useState, useEffect } from "react";
 
-type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: string; r?: string; ref?: string; p?: string; generated?: boolean };
+type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: string; r?: string; ref?: string; generated?: boolean };
 type Entry = { name: string; score: number };
 
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
@@ -133,20 +133,18 @@ export default function Page() {
       if (G.golden) { pts *= 2; if (G.lives < 5) { G.lives++; G.maxLives = Math.max(G.maxLives, G.lives); } }
       G.score += pts;
       const ref = G.cur.r ? ` <span class="ref">${G.cur.r}</span>` : "";
-      const ptr = G.cur.p ? `<span class="pointer">💡 ${G.cur.p}</span>` : "";
-      G.note = `<b>Correct.</b> ${G.cur.n}${ref}${ptr}`;
+      G.note = `<b>Correct.</b> ${G.cur.n}${ref}`;
     } else {
       const lost = G.combo; G.combo = 0; G.lives = Math.max(0, G.lives - 1);
       const ref = G.cur.r ? ` <span class="ref">${G.cur.r}</span>` : "";
       const ls = lost >= 3 ? ` (lost a ×${lost} streak!)` : "";
-      const ptr = G.cur.p ? `<span class="pointer">💡 ${G.cur.p}</span>` : "";
-      G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}${ptr}`;
+      G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}`;
     }
     force();
-    // Kahoot-style: hold the reveal for 3s while a bar fills toward the next question
+    // Kahoot-style: hold the reveal for 2s while a bar fills toward the next question
     setRevealPct(0);
     stopReveal();
-    const startAt = performance.now(), DUR = 3000;
+    const startAt = performance.now(), DUR = 2000;
     revealTick.current = setInterval(() => {
       const p = Math.min(100, ((performance.now() - startAt) / DUR) * 100);
       setRevealPct(p);
@@ -219,8 +217,8 @@ export default function Page() {
   /* ---------- render ---------- */
   if (screen === "start") return (
     <div className="app start">
-      <div className="flame-logo">🔥</div>
-      <h1 className="brand">Scripture Blitz</h1>
+      <div className="flame-logo">📖 🤺</div>
+      <h1 className="brand">Word Warriors</h1>
       <p className="tag">How well do you know the Word?</p>
       <div className="field">
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
