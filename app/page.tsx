@@ -143,10 +143,10 @@ export default function Page() {
       G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}${ptr}`;
     }
     force();
-    // Kahoot-style: hold the reveal for 2s while a bar fills toward the next question
+    // Kahoot-style: hold the reveal for 3s while a bar fills toward the next question
     setRevealPct(0);
     stopReveal();
-    const startAt = performance.now(), DUR = 2000;
+    const startAt = performance.now(), DUR = 3000;
     revealTick.current = setInterval(() => {
       const p = Math.min(100, ((performance.now() - startAt) / DUR) * 100);
       setRevealPct(p);
