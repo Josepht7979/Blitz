@@ -46,7 +46,8 @@ h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
 .cat .ct{flex:1;} .cat .ct b{font-size:1.02rem;} .cat .ct span{display:block;font-size:.76rem;color:var(--muted);}
 .cat .time{font-family:Anton;color:var(--muted);}
 .hud{display:flex;align-items:center;justify-content:space-between;}
-.lives{font-size:1rem;letter-spacing:1px;}
+.lives{display:flex;gap:3px;font-size:1.1rem;}
+.heart.lost{filter:grayscale(1);opacity:.28;}
 .score-wrap{text-align:right;}
 .score-label{font-size:.56rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
 .score{font-family:Anton;font-size:1.5rem;}

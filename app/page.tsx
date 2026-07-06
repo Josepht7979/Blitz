@@ -243,7 +243,7 @@ export default function Page() {
       <div className="app game">
         <div className="topbar">
           <div className="hud">
-            <div className="lives">{"❤".repeat(G.lives)}{"🖤".repeat(Math.max(0, G.maxLives - G.lives))}</div>
+            <div className="lives">{Array.from({ length: G.maxLives }).map((_, i) => (<span key={i} className={"heart" + (i < G.lives ? "" : " lost")}>❤️</span>))}</div>
             <div className="score-wrap"><div className="score-label">Score</div><div className="score">{G.score.toLocaleString()}</div></div>
           </div>
           <div className="combo-bar">
@@ -251,7 +251,7 @@ export default function Page() {
             <div className="combo-info"><div className="mult">×{mult()}</div><div className="streak">{G.combo === 0 ? "No streak yet" : `${G.combo} in a row`}</div></div>
             <div className="center"><div className="tnum">{Math.ceil(frac * secs())}</div></div>
           </div>
-          <div className={"tbar" + (G.locked ? " reveal" : "")}><div style={{ width: `${G.locked ? 100 - revealPct : frac * 100}%` }} /></div>
+          <div className={"tbar" + (G.locked ? " reveal" : "")}><div style={{ width: `${G.locked ? revealPct : frac * 100}%` }} /></div>
         </div>
         <div className="q-card">
           <div className="q-meta">
