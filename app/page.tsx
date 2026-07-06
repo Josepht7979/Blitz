@@ -243,7 +243,7 @@ export default function Page() {
       <div className="app game">
         <div className="topbar">
           <div className="hud">
-            <div className="lives">{Array.from({ length: G.maxLives }).map((_, i) => (<span key={i} className={"heart" + (i < G.lives ? "" : " lost")}>❤️</span>))}</div>
+            <div className="lives">{Array.from({ length: G.maxLives }).map((_, i) => (<span key={i} className={"pip" + (i < G.lives ? "" : " lost")} />))}</div>
             <div className="score-wrap"><div className="score-label">Score</div><div className="score">{G.score.toLocaleString()}</div></div>
           </div>
           <div className="combo-bar">
@@ -261,6 +261,7 @@ export default function Page() {
           </div>
           <div className="question">{c.q}</div>
           {c.verse && <div className="verse">{c.verse}</div>}
+          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
           <div className="opts">
             {c.o.map((t, i) => {
               let cls = "opt"; let mark = "";
@@ -272,7 +273,6 @@ export default function Page() {
               return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span className="opt-text">{t}</span>{mark && <span className="mark">{mark}</span>}</button>;
             })}
           </div>
-          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
         </div>
         <button className="btn ghost endrun" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
       </div>
