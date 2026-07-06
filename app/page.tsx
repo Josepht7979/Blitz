@@ -256,8 +256,9 @@ export default function Page() {
             {c.generated && <span className="chip gen">✦ Generated</span>}
             {G.golden && <span className="chip gold">✦ Golden Verse · 2×</span>}
           </div>
+          <div className="question">{c.q}</div>
           <div className="qscroll">
-            <div className="question">{c.q}{c.verse && <span className="verse">{c.verse}</span>}</div>
+            {c.verse && <div className="verse">{c.verse}</div>}
             {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
           </div>
           <div className="opts">
