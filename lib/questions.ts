@@ -1,7 +1,5 @@
 import curated from "@/data/questions.curated.json";
 import bible from "@/data/bible.json";
-import edifyingGen from "@/data/questions.edifying.json";
-import { pointerForGenerated } from "@/lib/pointers";
 
 // To go from ~hundreds to tens of thousands of questions, replace
 // data/bible.json with a full public-domain Bible (WEB or KJV). The generators
@@ -16,20 +14,12 @@ export type Question = {
   n: string;
   ref?: string;
   r?: string;          // reflection line (edifying)
-  p?: string;          // pointer: a short fun-fact / learning / context line
   generated?: boolean;
 };
 
 type Verse = { book: string; chapter: number; verse: number; text: string };
 
 const CURATED = curated as Record<string, Question[]>;
-const EDIFYING_GEN = edifyingGen as Question[];
-// Edifying draws from the 30 hand-written devotional questions plus ~970
-// complete-the-verse questions generated from beloved BSB passages.
-const POOLS: Record<string, Question[]> = {
-  ...CURATED,
-  edifying: [...(CURATED["edifying"] ?? []), ...EDIFYING_GEN],
-};
 const VERSES = bible as Verse[];
 const BOOKS = [...new Set(VERSES.map((v) => v.book))];
 
@@ -64,45 +54,20 @@ function sampleExcept(arr: string[], n: number, exclude: string): string[] {
   return shuffle(arr.filter((x) => x !== exclude)).slice(0, n);
 }
 
-// --- Distractor helpers ---------------------------------------------------
-// The goal: make "complete the verse" options grammatically parallel so grammar
-// alone can't eliminate them. Wrong options share the answer's word-ending
-// (tense/part-of-speech signal) or are same-category (numbers), forcing recall.
+// --- Knowledge-based generators -----------------------------------------
+// Every question requires knowing the Bible, not English. Generic-word
+// "complete the verse" was removed because grammar alone could solve it.
 const NUMBERS = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","forty","fifty","seventy","hundred","thousand"];
-
-function endSig(w: string): string {
-  const s = w.toLowerCase();
-  if (/eth$/.test(s)) return "eth";
-  if (/ing$/.test(s)) return "ing";
-  if (/est$/.test(s)) return "est";
-  if (/ed$/.test(s)) return "ed";
-  if (/ness$/.test(s)) return "ness";
-  if (/ions?$/.test(s)) return "ion";
-  if (/ly$/.test(s)) return "ly";
-  if (/ful$/.test(s)) return "ful";
-  if (/s$/.test(s)) return "s";
-  return s.slice(-2);
-}
-const BY_END: Record<string, string[]> = {};
-for (const w of VOCAB) { const k = endSig(w); (BY_END[k] ||= []).push(w); }
-
-function distractorsFor(answer: string): string[] {
-  const a = answer.toLowerCase();
-  if (NUMBERS.includes(a)) return sampleExcept(NUMBERS, 3, a);
-  const pool = (BY_END[endSig(a)] || []).filter((w) => w.toLowerCase() !== a);
-  let d = shuffle(pool.slice()).slice(0, 3);
-  if (d.length < 3) {
-    const extra = sampleExcept(VOCAB.filter((w) => Math.abs(w.length - a.length) <= 2), 3 - d.length, a);
-    d = [...new Set([...d, ...extra])].slice(0, 3);
-  }
-  return d;
-}
+const OT = BOOKS.slice(0, 39);
+const NT = BOOKS.slice(39);
 
 function genBookId(): Question | null {
   const v = pick(VERSES);
-  const d = sampleExcept(BOOKS, 3, v.book);
-  if (d.length < 3) return null;
-  const o = shuffle([v.book, ...d]);
+  // distractors from the SAME testament so you can't rule books out by style
+  const sameTest = OT.includes(v.book) ? OT : NT;
+  let pool = sameTest.filter((b) => b !== v.book);
+  if (pool.length < 3) pool = BOOKS.filter((b) => b !== v.book);
+  const o = shuffle([v.book, ...shuffle(pool).slice(0, 3)]);
   return {
     q: "In which book of the Bible is this verse found?",
     verse: `\u201C${v.text}\u201D`,
@@ -112,25 +77,26 @@ function genBookId(): Question | null {
   };
 }
 
-function genComplete(): Question | null {
-  for (let tries = 0; tries < 8; tries++) {
+function genNumber(): Question | null {
+  for (let tries = 0; tries < 30; tries++) {
     const v = pick(VERSES);
     const words = v.text.split(/\s+/);
     const cands = words
-      .map((w, i) => ({ w, i, clean: w.toLowerCase().replace(/[^a-z']/g, "") }))
-      .filter((x) => x.clean.length >= 5 && !STOP.has(x.clean));
+      .map((w, i) => ({ w, i, clean: w.toLowerCase().replace(/[^a-z]/g, "") }))
+      .filter((x) => NUMBERS.includes(x.clean));
     if (!cands.length) continue;
     const c = pick(cands);
-    const answer = c.w.replace(/[^A-Za-z']/g, "");
-    const d = distractorsFor(answer);              // grammatically-parallel wrong options
+    const answer = c.w.replace(/[^A-Za-z]/g, "");
+    const cap = /^[A-Z]/.test(answer);
+    const d = sampleExcept(NUMBERS, 3, c.clean).map((x) => (cap ? x[0].toUpperCase() + x.slice(1) : x));
     if (d.length < 3) continue;
     const blanked = words.map((w, i) => (i === c.i ? "_____" : w)).join(" ");
     const o = shuffle([answer, ...d]);
     return {
-      q: "Complete the verse:",
+      q: "Fill in the missing number:",
       verse: `\u201C${blanked}\u201D`,
       o, a: o.indexOf(answer),
-      c: "Scripture", n: `The word is "${answer}".`,
+      c: "Scripture", n: `The number is "${answer}".`,
       ref: `${v.book} ${v.chapter}:${v.verse}`, generated: true,
     };
   }
@@ -156,10 +122,10 @@ function genFillName(): Question | null {
     const blanked = words.map((w, i) => (i === c.i ? c.w.replace(c.name, "_____") : w)).join(" ");
     const o = shuffle([c.name, ...d]);
     return {
-      q: "Fill in the missing name:",
+      q: "Who or where fills the blank?",
       verse: `\u201C${blanked}\u201D`,
       o, a: o.indexOf(c.name),
-      c: "Scripture", n: `The name is "${c.name}".`,
+      c: "Scripture", n: `The answer is "${c.name}".`,
       ref: `${v.book} ${v.chapter}:${v.verse}`, generated: true,
     };
   }
@@ -171,20 +137,17 @@ export function refOf(q: Question): string {
   return q.ref || q.r || q.verse || q.q;
 }
 
-/** Weighted pick — favors knowledge-based formats over verse-completion. */
+/** Weighted pick — every format requires Bible knowledge, not grammar. */
 function pickGenerated(): Question | null {
   const r = Math.random();
-  let item: Question | null;
-  if (r < 0.42) item = genBookId();         // recognize the source book
-  else if (r < 0.78) item = genFillName();  // name / place recall
-  else item = genComplete();                // verse recall (parallel distractors)
-  if (item && !item.p) item.p = pointerForGenerated(item);  // fun-fact / context line
-  return item;
+  if (r < 0.45) return genBookId();      // which book — recognition
+  if (r < 0.82) return genFillName();    // which person / place
+  return genNumber() || genFillName();   // which number (else a name)
 }
 
 /** Returns a fresh batch, optionally excluding questions this account has already seen. */
 export function getBatch(category: string, count = 12, exclude?: Set<string>): Question[] {
-  const curatedPool = POOLS[category] ?? POOLS["med"];
+  const curatedPool = CURATED[category] ?? CURATED["med"];
   const genChance = category === "med" || category === "hard" ? 0.9 : 0;
   const out: Question[] = [];
   const used = new Set<string>();
