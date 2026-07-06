@@ -16,25 +16,9 @@ const RANKS = [
 
 const refOf = (q: Q) => q.ref || q.r || q.verse || q.q;
 
-// Name + code -> short opaque account id (not a password, just an identifier so
-// a player's "already seen" history follows the same name+code across devices).
-function makeAcct(name: string, code: string): string {
-  const s = name.trim().toLowerCase() + "|" + code.trim();
-  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
-  for (let i = 0; i < s.length; i++) {
-    const ch = s.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return ((h2 >>> 0).toString(36) + (h1 >>> 0).toString(36)).slice(0, 20);
-}
-
 export default function Page() {
   const [screen, setScreen] = useState<"start" | "game" | "over" | "board">("start");
   const [name, setName] = useState("");
-  const [code, setCode] = useState("");
   const [nameErr, setNameErr] = useState("");
   const [cat, setCat] = useState("med");
   const [, force] = useReducer((x) => x + 1, 0);
@@ -70,6 +54,21 @@ export default function Page() {
     }, 80);
   }
   useEffect(() => () => { stopTimer(); stopReveal(); }, []);
+
+  // Silent per-device id — remembers "already seen" like a game remembers your
+  // progress, with no login and no code. Lives in this browser only.
+  useEffect(() => {
+    try {
+      let id = localStorage.getItem("sb_device");
+      if (!id) {
+        id = (typeof crypto !== "undefined" && crypto.randomUUID)
+          ? crypto.randomUUID()
+          : Math.random().toString(36).slice(2) + Date.now().toString(36);
+        localStorage.setItem("sb_device", id);
+      }
+      G.acct = id.replace(/[^a-z0-9]/gi, "").slice(0, 64);
+    } catch { G.acct = ""; }
+  }, []);
 
   async function fetchBatch(): Promise<Q[]> {
     try {
@@ -180,9 +179,7 @@ export default function Page() {
   function tryStart() {
     const t = name.trim();
     if (t.length < 2) { setNameErr("Enter a name (2+ characters)."); return; }
-    if (code.trim().length < 4) { setNameErr("Enter a code (4+ characters) so we can skip questions you've seen."); return; }
     setNameErr("");
-    G.acct = makeAcct(name, code);
     startRun();
   }
 
@@ -227,11 +224,6 @@ export default function Page() {
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
         <input id="nm" className="nameInput" maxLength={16} value={name}
           onChange={(e) => { setName(e.target.value); setNameErr(""); }} />
-      </div>
-      <div className="field" style={{ marginTop: 8 }}>
-        <label htmlFor="cd">Your code (use the same one each time)</label>
-        <input id="cd" className="nameInput" type="password" maxLength={24} value={code}
-          onChange={(e) => { setCode(e.target.value); setNameErr(""); }} />
       </div>
       {nameErr && <div className="err">{nameErr}</div>}
       <div className="cats">
