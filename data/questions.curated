@@ -1,0 +1,1301 @@
+{
+"easy": [
+{
+"q": "What is the first book of the Bible?",
+"o": [
+"Exodus",
+"Genesis",
+"Psalms",
+"John"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Genesis — \"in the beginning.\"",
+"p": "Genesis is Greek for 'origin'; its Hebrew title 'Bereshit' means 'in the beginning.'"
+},
+{
+"q": "What is the last book of the Bible?",
+"o": [
+"Malachi",
+"Acts",
+"Revelation",
+"Jude"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Revelation.",
+"p": "'Revelation' translates the Greek 'apokalypsis' — an unveiling."
+},
+{
+"q": "Who built the ark?",
+"o": [
+"Moses",
+"Noah",
+"Abraham",
+"David"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Noah — Genesis 6.",
+"p": "The ark was longer than a football field by the cubits given."
+},
+{
+"q": "Where was Jesus born?",
+"o": [
+"Nazareth",
+"Jerusalem",
+"Bethlehem",
+"Cana"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Bethlehem — Luke 2.",
+"p": "'Bethlehem' means 'house of bread' — fitting for the Bread of Life."
+},
+{
+"q": "Who was swallowed by a great fish?",
+"o": [
+"Jonah",
+"Job",
+"Joshua",
+"Jeremiah"
+],
+"a": 0,
+"c": "Old Testament",
+"n": "Jonah — three days.",
+"p": "Jonah is the only prophet who fled the opposite way from his call."
+},
+{
+"q": "How many disciples did Jesus choose?",
+"o": [
+"7",
+"10",
+"12",
+"40"
+],
+"a": 2,
+"c": "New Testament",
+"n": "The Twelve.",
+"p": "Twelve disciples echo Israel's twelve tribes — a new people forming."
+},
+{
+"q": "Who betrayed Jesus?",
+"o": [
+"Peter",
+"Thomas",
+"Judas Iscariot",
+"John"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Judas — 30 pieces of silver.",
+"p": "Thirty pieces of silver was the price of a slave in Exodus 21:32."
+},
+{
+"q": "Who baptized Jesus?",
+"o": [
+"Peter",
+"John the Baptist",
+"Paul",
+"Elijah"
+],
+"a": 1,
+"c": "New Testament",
+"n": "John the Baptist.",
+"p": "John and Jesus were kin — Elizabeth and Mary were relatives."
+},
+{
+"q": "Who was the mother of Jesus?",
+"o": [
+"Martha",
+"Mary",
+"Ruth",
+"Sarah"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Mary.",
+"p": "Mary was likely still a teenager when Gabriel appeared to her."
+},
+{
+"q": "Who denied Jesus three times?",
+"o": [
+"Peter",
+"Judas",
+"Thomas",
+"James"
+],
+"a": 0,
+"c": "New Testament",
+"n": "Peter.",
+"p": "A rooster's crow still marks Peter's threefold denial."
+},
+{
+"q": "Who was the first man?",
+"o": [
+"Cain",
+"Adam",
+"Enoch",
+"Seth"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Adam.",
+"p": "'Adam' is Hebrew for 'man,' from 'adamah,' the ground he was formed from."
+},
+{
+"q": "Who was the first woman?",
+"o": [
+"Sarah",
+"Mary",
+"Eve",
+"Ruth"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Eve.",
+"p": "'Eve' means 'living' — the mother of all the living."
+},
+{
+"q": "What did Jesus turn water into?",
+"o": [
+"Oil",
+"Wine",
+"Bread",
+"Honey"
+],
+"a": 1,
+"c": "Miracles",
+"n": "Wine — at Cana.",
+"p": "Water into wine at Cana was Jesus' first recorded miracle."
+},
+{
+"q": "Who killed Goliath?",
+"o": [
+"Saul",
+"Samson",
+"David",
+"Jonathan"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "David.",
+"p": "David felled Goliath with a sling — an ordinary shepherd's tool."
+},
+{
+"q": "\"The Lord is my ___\" (Psalm 23)",
+"o": [
+"King",
+"Shepherd",
+"Rock",
+"Light"
+],
+"a": 1,
+"c": "Verses",
+"n": "Shepherd.",
+"p": "Psalm 23 is the best-loved psalm, penned by David the shepherd-king."
+},
+{
+"q": "What sign did God give Noah after the flood?",
+"o": [
+"A star",
+"A rainbow",
+"A dove",
+"A cloud"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "The rainbow.",
+"p": "The rainbow sealed God's promise never again to flood the earth."
+},
+{
+"q": "On which day did God rest?",
+"o": [
+"First",
+"Sixth",
+"Seventh",
+"Third"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "The seventh.",
+"p": "The weekly Sabbath is rooted here, in creation's seventh day."
+},
+{
+"q": "Who led Israel out of Egypt?",
+"o": [
+"Aaron",
+"Joshua",
+"Moses",
+"Abraham"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Moses.",
+"p": "Moses' name may mean 'drawn out' — of the water he was pulled from."
+},
+{
+"q": "Who was thrown into the lions' den?",
+"o": [
+"Daniel",
+"David",
+"Joseph",
+"Elijah"
+],
+"a": 0,
+"c": "Old Testament",
+"n": "Daniel.",
+"p": "Daniel served under the empires of both Babylon and Persia."
+},
+{
+"q": "What did Jesus ride into Jerusalem?",
+"o": [
+"A horse",
+"A donkey",
+"A camel",
+"A chariot"
+],
+"a": 1,
+"c": "New Testament",
+"n": "A donkey's colt.",
+"p": "Riding a donkey signalled peace; a warhorse would signal conquest."
+},
+{
+"q": "How many days did it rain in the flood?",
+"o": [
+"7",
+"30",
+"40",
+"100"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Forty days and nights.",
+"p": "Forty is Scripture's recurring number for testing and preparation."
+},
+{
+"q": "What was the garden where Adam and Eve lived?",
+"o": [
+"Gethsemane",
+"Eden",
+"Babylon",
+"Sinai"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "The Garden of Eden.",
+"p": "'Eden' means 'delight' — a garden God planted Himself."
+}
+],
+"med": [
+{
+"q": "How many books are in the Protestant Bible?",
+"o": [
+"27",
+"39",
+"66",
+"73"
+],
+"a": 2,
+"c": "Bible Facts",
+"n": "66 — 39 Old + 27 New.",
+"p": "'Bible' comes from the Greek 'biblia' — simply 'the books.'"
+},
+{
+"q": "How many plagues struck Egypt?",
+"o": [
+"7",
+"10",
+"12",
+"3"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Ten.",
+"p": "The tenth plague, the firstborn, gave rise to the Passover."
+},
+{
+"q": "Which sea did Moses part?",
+"o": [
+"Dead Sea",
+"Red Sea",
+"Galilee",
+"Jordan"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "The Red Sea.",
+"p": "The Hebrew 'Yam Suph' can also be read 'Sea of Reeds.'"
+},
+{
+"q": "On which mountain were the Ten Commandments given?",
+"o": [
+"Ararat",
+"Sinai",
+"Carmel",
+"Zion"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Mount Sinai.",
+"p": "Sinai is also called Horeb, 'the mountain of God.'"
+},
+{
+"q": "Who interpreted Pharaoh's dreams?",
+"o": [
+"Daniel",
+"Joseph",
+"Moses",
+"Aaron"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Joseph.",
+"p": "Joseph rose from a prison cell to Egypt's second-in-command."
+},
+{
+"q": "Who was the wisest king of Israel?",
+"o": [
+"David",
+"Saul",
+"Solomon",
+"Hezekiah"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Solomon.",
+"p": "Solomon asked God for wisdom over riches — and received both."
+},
+{
+"q": "Who was the first king of Israel?",
+"o": [
+"David",
+"Saul",
+"Solomon",
+"Samuel"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Saul.",
+"p": "Saul stood a head taller than anyone else in Israel."
+},
+{
+"q": "Whose strength left him when his hair was cut?",
+"o": [
+"Samson",
+"Gideon",
+"Goliath",
+"Boaz"
+],
+"a": 0,
+"c": "Old Testament",
+"n": "Samson.",
+"p": "Samson was a Nazirite; his uncut hair marked a vow, not magic."
+},
+{
+"q": "Which prophet was taken up in a whirlwind?",
+"o": [
+"Elisha",
+"Elijah",
+"Enoch",
+"Isaiah"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Elijah.",
+"p": "Elijah never died — he was taken up in a chariot of fire."
+},
+{
+"q": "Which apostle had been a tax collector?",
+"o": [
+"Mark",
+"Luke",
+"Matthew",
+"Simon"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Matthew.",
+"p": "Tax collectors were despised as collaborators with Rome."
+},
+{
+"q": "Where were believers first called \"Christians\"?",
+"o": [
+"Jerusalem",
+"Antioch",
+"Rome",
+"Ephesus"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Antioch — Acts 11:26.",
+"p": "Antioch, in modern Turkey, became the early church's mission base."
+},
+{
+"q": "Who wrote most of the New Testament letters?",
+"o": [
+"Peter",
+"John",
+"Paul",
+"James"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Paul.",
+"p": "Paul is credited with roughly 13 of the New Testament's 27 books."
+},
+{
+"q": "On the road to where was Saul converted?",
+"o": [
+"Emmaus",
+"Jericho",
+"Damascus",
+"Joppa"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Damascus.",
+"p": "Damascus is among the world's oldest continuously lived-in cities."
+},
+{
+"q": "Who climbed a tree to see Jesus?",
+"o": [
+"Nicodemus",
+"Zacchaeus",
+"Bartimaeus",
+"Lazarus"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Zacchaeus.",
+"p": "Zacchaeus was a wealthy chief tax collector, widely resented."
+},
+{
+"q": "How many people were saved on Noah's ark?",
+"o": [
+"2",
+"7",
+"8",
+"12"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Eight.",
+"p": "Only eight people — Noah's family — survived the flood."
+},
+{
+"q": "How many loaves fed the five thousand?",
+"o": [
+"2",
+"5",
+"7",
+"12"
+],
+"a": 1,
+"c": "Miracles",
+"n": "Five loaves, two fish.",
+"p": "Feeding the 5,000 is the sole miracle in all four Gospels."
+},
+{
+"q": "Which disciple doubted the resurrection?",
+"o": [
+"Thomas",
+"Peter",
+"Philip",
+"Andrew"
+],
+"a": 0,
+"c": "New Testament",
+"n": "Thomas.",
+"p": "'Doubting Thomas' became shorthand for a hard-nosed sceptic."
+},
+{
+"q": "Which queen saved her people from Haman?",
+"o": [
+"Ruth",
+"Esther",
+"Deborah",
+"Miriam"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Esther.",
+"p": "Esther and Ruth are the only Bible books named for women."
+},
+{
+"q": "How many days was Lazarus dead before being raised?",
+"o": [
+"1",
+"2",
+"3",
+"4"
+],
+"a": 3,
+"c": "Miracles",
+"n": "Four — John 11.",
+"p": "Four days dead meant, to onlookers, all hope was gone."
+},
+{
+"q": "What food did God provide in the wilderness?",
+"o": [
+"Figs",
+"Manna",
+"Honey",
+"Olives"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Manna.",
+"p": "'Manna' comes from the Hebrew for 'What is it?'"
+},
+{
+"q": "Who was renamed from Abram?",
+"o": [
+"Isaac",
+"Jacob",
+"Abraham",
+"Noah"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Abraham.",
+"p": "'Abram' means 'exalted father'; 'Abraham,' 'father of many.'"
+},
+{
+"q": "What was Abraham's promised son's name?",
+"o": [
+"Ishmael",
+"Isaac",
+"Jacob",
+"Esau"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Isaac.",
+"p": "'Isaac' means 'he laughs' — Sarah laughed at the promise."
+},
+{
+"q": "Who walked on water then began to sink?",
+"o": [
+"John",
+"Peter",
+"James",
+"Andrew"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Peter.",
+"p": "'Peter' means 'rock'; Jesus renamed him from Simon."
+},
+{
+"q": "Who was Ruth's mother-in-law?",
+"o": [
+"Orpah",
+"Naomi",
+"Rachel",
+"Leah"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Naomi.",
+"p": "Naomi renamed herself 'Mara' — 'bitter' — in her grief."
+},
+{
+"q": "Who tried to wash his hands of Jesus' death?",
+"o": [
+"Herod",
+"Pilate",
+"Caiaphas",
+"Judas"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Pontius Pilate.",
+"p": "Pilate governed Judea about ten years for Rome."
+}
+],
+"hard": [
+{
+"q": "What is the shortest verse in the Bible (KJV)?",
+"o": [
+"God is love",
+"Jesus wept",
+"Rejoice always",
+"Pray without ceasing"
+],
+"a": 1,
+"c": "Bible Facts",
+"n": "\"Jesus wept.\" — John 11:35.",
+"p": "At two words, John 11:35 is the shortest verse in English Bibles."
+},
+{
+"q": "What was Paul's trade?",
+"o": [
+"Fisherman",
+"Tentmaker",
+"Carpenter",
+"Physician"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Tentmaker — Acts 18:3.",
+"p": "Paul funded his own missionary journeys by making tents."
+},
+{
+"q": "Which three were thrown into the fiery furnace?",
+"o": [
+"Shadrach, Meshach, Abednego",
+"Peter, James, John",
+"Cain, Abel, Seth",
+"Saul, David, Jonathan"
+],
+"a": 0,
+"c": "Old Testament",
+"n": "Hebrew names: Hananiah, Mishael, Azariah.",
+"p": "Their Babylonian names replaced Hebrew ones that honoured God."
+},
+{
+"q": "Which book has the most chapters?",
+"o": [
+"Genesis",
+"Psalms",
+"Isaiah",
+"Jeremiah"
+],
+"a": 1,
+"c": "Bible Facts",
+"n": "Psalms — 150.",
+"p": "Psalms holds 150 chapters — plus the Bible's longest and shortest."
+},
+{
+"q": "Who was the first Christian martyr?",
+"o": [
+"Stephen",
+"James",
+"Paul",
+"Peter"
+],
+"a": 0,
+"c": "New Testament",
+"n": "Stephen — Acts 7.",
+"p": "Saul, later Paul, stood approving as Stephen was stoned."
+},
+{
+"q": "How many fruits of the Spirit are listed (Gal 5)?",
+"o": [
+"7",
+"9",
+"10",
+"12"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Nine.",
+"p": "One fruit of the Spirit, nine facets — and love leads them."
+},
+{
+"q": "Who is called \"a man after God's own heart\"?",
+"o": [
+"Moses",
+"David",
+"Samuel",
+"Josiah"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "David — 1 Sam 13:14.",
+"p": "David is the Bible's most-named human after Jesus Himself."
+},
+{
+"q": "What did the dove bring back to Noah?",
+"o": [
+"A fig leaf",
+"An olive leaf",
+"A grain",
+"A twig"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Olive leaf — Gen 8:11.",
+"p": "The dove's olive leaf became a lasting emblem of peace."
+},
+{
+"q": "Who succeeded Moses to lead Israel?",
+"o": [
+"Aaron",
+"Caleb",
+"Joshua",
+"Eleazar"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Joshua.",
+"p": "'Joshua' is the Hebrew form of 'Jesus' — 'the Lord saves.'"
+},
+{
+"q": "How many books are in the Old Testament?",
+"o": [
+"27",
+"39",
+"46",
+"49"
+],
+"a": 1,
+"c": "Bible Facts",
+"n": "39.",
+"p": "The 39 Old Testament books were written mostly in Hebrew."
+},
+{
+"q": "Which prophet was told to marry Gomer?",
+"o": [
+"Amos",
+"Hosea",
+"Joel",
+"Micah"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Hosea — a living parable.",
+"p": "Hosea's marriage dramatised God's love for a wayward Israel."
+},
+{
+"q": "Who rebuilt Jerusalem's walls as governor?",
+"o": [
+"Ezra",
+"Nehemiah",
+"Zerubbabel",
+"Haggai"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Nehemiah.",
+"p": "Nehemiah rebuilt Jerusalem's walls in just 52 days."
+},
+{
+"q": "In which garden did Jesus pray before His arrest?",
+"o": [
+"Eden",
+"Gethsemane",
+"Siloam",
+"Olivet"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Gethsemane.",
+"p": "'Gethsemane' means 'oil press' — an olive grove near Jerusalem."
+},
+{
+"q": "Whose ear did Peter cut off at Jesus' arrest?",
+"o": [
+"Malchus",
+"Demas",
+"Gaius",
+"Crispus"
+],
+"a": 0,
+"c": "New Testament",
+"n": "Malchus — John 18:10.",
+"p": "Luke the physician alone notes Jesus healed the severed ear."
+},
+{
+"q": "Who was the father of John the Baptist?",
+"o": [
+"Zechariah",
+"Zebedee",
+"Zacchaeus",
+"Zephaniah"
+],
+"a": 0,
+"c": "New Testament",
+"n": "Zechariah — Luke 1.",
+"p": "Zechariah was struck mute until John was born and named."
+},
+{
+"q": "How many years did the Israelites wander in the wilderness?",
+"o": [
+"7",
+"12",
+"40",
+"70"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Forty years.",
+"p": "One year of wandering for each day the spies scouted Canaan."
+},
+{
+"q": "Which Gospel was written by a physician?",
+"o": [
+"Matthew",
+"Mark",
+"Luke",
+"John"
+],
+"a": 2,
+"c": "New Testament",
+"n": "Luke, the beloved physician.",
+"p": "Luke wrote more of the New Testament by volume than anyone."
+},
+{
+"q": "What was the name of Abraham's wife?",
+"o": [
+"Hagar",
+"Sarah",
+"Rebekah",
+"Rachel"
+],
+"a": 1,
+"c": "Old Testament",
+"n": "Sarah.",
+"p": "Sarah bore Isaac at 90; her name means 'princess.'"
+},
+{
+"q": "In what city was Paul imprisoned when he wrote several epistles?",
+"o": [
+"Athens",
+"Rome",
+"Corinth",
+"Philippi"
+],
+"a": 1,
+"c": "New Testament",
+"n": "Rome.",
+"p": "His 'prison letters' include Ephesians, Philippians and Colossians."
+},
+{
+"q": "Who was the oldest man recorded in the Bible?",
+"o": [
+"Adam",
+"Noah",
+"Methuselah",
+"Enoch"
+],
+"a": 2,
+"c": "Old Testament",
+"n": "Methuselah — 969 years.",
+"p": "Methuselah's 969 years is the longest lifespan in Scripture."
+}
+],
+"edifying": [
+{
+"q": "According to Philippians 4:6-7, what guards our hearts when we pray with thanksgiving instead of worrying?",
+"o": [
+"Wealth",
+"The peace of God",
+"Good luck",
+"Strength"
+],
+"a": 1,
+"c": "Edifying",
+"n": "The peace of God, beyond understanding, guards your heart and mind.",
+"r": "Philippians 4:6-7 — bring it to God before you carry it alone.",
+"p": "Paul wrote Philippians from prison — yet its theme is joy."
+},
+{
+"q": "What did Jesus call the greatest commandment?",
+"o": [
+"Honour your parents",
+"Love the Lord your God with all your heart",
+"Do not steal",
+"Keep the Sabbath"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Love God fully — and your neighbour as yourself.",
+"r": "Matthew 22:37-39.",
+"p": "Jesus drew this from Deuteronomy 6:5 and Leviticus 19:18."
+},
+{
+"q": "According to Micah 6:8, what does the Lord require of us?",
+"o": [
+"Sacrifice and fasting",
+"Act justly, love mercy, walk humbly",
+"Wealth and wisdom",
+"Silence and solitude"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Justice, mercy, and humility before God.",
+"r": "Micah 6:8 — a whole life in one verse.",
+"p": "Many call this one verse the heart of the prophets' message."
+},
+{
+"q": "In Galatians 5, the fruit of the Spirit begins with which quality?",
+"o": [
+"Patience",
+"Love",
+"Self-control",
+"Joy"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Love — then joy, peace, patience, and the rest.",
+"r": "Galatians 5:22-23.",
+"p": "Nine qualities, one fruit — grown by the Spirit, not willpower."
+},
+{
+"q": "Proverbs 3:5 tells us to trust in the Lord and not lean on our own ___.",
+"o": [
+"Strength",
+"Understanding",
+"Wealth",
+"Friends"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Trust Him fully; He makes your paths straight.",
+"r": "Proverbs 3:5-6.",
+"p": "Proverbs pairs trusting God with releasing our need to figure it out."
+},
+{
+"q": "According to Romans 12:2, we are transformed by the renewing of our ___.",
+"o": [
+"Strength",
+"Mind",
+"Wealth",
+"Body"
+],
+"a": 1,
+"c": "Edifying",
+"n": "A renewed mind reshapes how you live.",
+"r": "Romans 12:2.",
+"p": "'Transformed' here is the Greek 'metamorphoo' — a full change."
+},
+{
+"q": "Matthew 6:33 says to seek first the ___ of God.",
+"o": [
+"Power",
+"Kingdom",
+"Riches",
+"Approval"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Seek His kingdom first; the rest is added.",
+"r": "Matthew 6:33.",
+"p": "From the Sermon on the Mount — seek first, and worry loosens."
+},
+{
+"q": "According to John 13:35, how will everyone know we are Jesus' disciples?",
+"o": [
+"By our knowledge",
+"By our love for one another",
+"By our miracles",
+"By our wealth"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Love is the mark of a disciple.",
+"r": "John 13:35.",
+"p": "Jesus said this the very night before the cross."
+},
+{
+"q": "James 1:19 says to be quick to listen, slow to speak, and slow to ___.",
+"o": [
+"Move",
+"Anger",
+"Give",
+"Judge"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Listen first; anger last.",
+"r": "James 1:19.",
+"p": "James is the New Testament's most practical, proverb-like letter."
+},
+{
+"q": "Psalm 119:105 calls God's word a lamp to my feet and a ___ to my path.",
+"o": [
+"Guard",
+"Light",
+"Gate",
+"Sword"
+],
+"a": 1,
+"c": "Edifying",
+"n": "The Word lights the next step.",
+"r": "Psalm 119:105.",
+"p": "Psalm 119, the Bible's longest chapter, is all about God's Word."
+},
+{
+"q": "In 1 Corinthians 13, which remains the greatest?",
+"o": [
+"Faith",
+"Hope",
+"Love",
+"Knowledge"
+],
+"a": 2,
+"c": "Edifying",
+"n": "Faith, hope and love remain — the greatest is love.",
+"r": "1 Corinthians 13:13.",
+"p": "Read at countless weddings — but written to a divided church."
+},
+{
+"q": "Ephesians 2:8-9 says we are saved by grace through ___, not by works.",
+"o": [
+"Faith",
+"Effort",
+"Law",
+"Wisdom"
+],
+"a": 0,
+"c": "Edifying",
+"n": "Grace is a gift, never a wage.",
+"r": "Ephesians 2:8-9.",
+"p": "Grace plus nothing — the verse at the Reformation's core."
+},
+{
+"q": "Isaiah 40:31 says those who hope in the Lord will renew their strength and soar on wings like ___.",
+"o": [
+"Doves",
+"Eagles",
+"Sparrows",
+"Ravens"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Wait on Him and rise renewed.",
+"r": "Isaiah 40:31.",
+"p": "Isaiah wrote this to exiles who felt completely worn out."
+},
+{
+"q": "In the Beatitudes, the peacemakers are called the ___ of God.",
+"o": [
+"Servants",
+"Children",
+"Heirs",
+"Friends"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Blessed are the peacemakers.",
+"r": "Matthew 5:9.",
+"p": "The Beatitudes open Jesus' Sermon on the Mount."
+},
+{
+"q": "Joshua 1:9 commands us to be strong and ___, for the Lord is with us.",
+"o": [
+"Patient",
+"Courageous",
+"Quiet",
+"Generous"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Courage flows from His presence.",
+"r": "Joshua 1:9.",
+"p": "God said this as Joshua stepped into Moses' shoes."
+},
+{
+"q": "Romans 8:28 says all things work together for ___ to those who love God.",
+"o": [
+"Comfort",
+"Good",
+"Reward",
+"Peace"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Even hard things are woven for good.",
+"r": "Romans 8:28.",
+"p": "Romans 8 ends: nothing can separate us from God's love."
+},
+{
+"q": "Matthew 11:28 — \"Come to me, all you who are weary, and I will give you ___.\"",
+"o": [
+"Wealth",
+"Rest",
+"Power",
+"Answers"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Bring the weight to Him; receive rest.",
+"r": "Matthew 11:28.",
+"p": "The image is a shared yoke — rest carried together, not alone."
+},
+{
+"q": "2 Timothy 1:7 — God gave us a spirit not of fear, but of power, love and a sound ___.",
+"o": [
+"Body",
+"Mind",
+"Heart",
+"Will"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Power, love, self-discipline — not fear.",
+"r": "2 Timothy 1:7.",
+"p": "Paul wrote this final letter to young Timothy near his death."
+},
+{
+"q": "Hebrews 11:1 — faith is the substance of things hoped for, the evidence of things not ___.",
+"o": [
+"Known",
+"Seen",
+"Said",
+"Held"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Faith sees what eyes cannot yet.",
+"r": "Hebrews 11:1.",
+"p": "Hebrews 11 then parades the great 'heroes of faith.'"
+},
+{
+"q": "1 John 1:9 — if we confess our sins, He is faithful and just to ___ us.",
+"o": [
+"Test",
+"Forgive",
+"Reward",
+"Teach"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Confession meets faithful forgiveness.",
+"r": "1 John 1:9.",
+"p": "'Faithful and just' — forgiveness is God keeping His own word."
+},
+{
+"q": "1 Thessalonians 5:16-18 — rejoice always, pray continually, and give ___ in all circumstances.",
+"o": [
+"Money",
+"Thanks",
+"Time",
+"Praise"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Gratitude in everything is God's will for you.",
+"r": "1 Thessalonians 5:16-18.",
+"p": "Three brief commands Paul calls simply 'God's will for you.'"
+},
+{
+"q": "Psalm 46:10 — \"Be still, and know that I am ___.\"",
+"o": [
+"Lord",
+"God",
+"King",
+"Near"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Stillness is where we know Him.",
+"r": "Psalm 46:10.",
+"p": "'Be still' renders a Hebrew word meaning 'let go, cease striving.'"
+},
+{
+"q": "Galatians 6:9 — let us not grow weary in doing ___, for we will reap a harvest.",
+"o": [
+"Good",
+"Work",
+"Right",
+"Well"
+],
+"a": 0,
+"c": "Edifying",
+"n": "Keep sowing good; the harvest comes.",
+"r": "Galatians 6:9.",
+"p": "Paul's farming image: sow now, reap in God's timing."
+},
+{
+"q": "Romans 5:8 — while we were still ___, Christ died for us.",
+"o": [
+"Lost",
+"Sinners",
+"Weak",
+"Afraid"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Loved before we deserved it.",
+"r": "Romans 5:8.",
+"p": "The gospel in a line — loved before we ever turned back."
+},
+{
+"q": "Colossians 3:23 — whatever you do, work at it with all your heart, as working for the ___.",
+"o": [
+"Boss",
+"Lord",
+"People",
+"Reward"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Ordinary work becomes worship.",
+"r": "Colossians 3:23.",
+"p": "Written for slaves and workers: all labour can honour God."
+},
+{
+"q": "Matthew 6:14 — if you forgive others, your heavenly Father will also ___ you.",
+"o": [
+"Reward",
+"Forgive",
+"Bless",
+"Keep"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Forgiveness given opens forgiveness received.",
+"r": "Matthew 6:14.",
+"p": "This follows immediately after the Lord's Prayer."
+},
+{
+"q": "Philippians 4:13 — \"I can do all things through ___ who strengthens me.\"",
+"o": [
+"faith",
+"Christ",
+"prayer",
+"hope"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Strength for all things is found in Him.",
+"r": "Philippians 4:13.",
+"p": "Often quoted for success; Paul meant contentment in any lot."
+},
+{
+"q": "Proverbs 17:17 — a ___ loves at all times.",
+"o": [
+"father",
+"friend",
+"brother",
+"leader"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Steady love marks true friendship.",
+"r": "Proverbs 17:17.",
+"p": "Its partner line: 'a brother is born for adversity.'"
+},
+{
+"q": "John 14:6 — Jesus said, \"I am the way, the ___, and the life.\"",
+"o": [
+"light",
+"truth",
+"door",
+"word"
+],
+"a": 1,
+"c": "Edifying",
+"n": "The way, the truth, the life.",
+"r": "John 14:6.",
+"p": "One of John's seven great 'I am' sayings."
+},
+{
+"q": "Lamentations 3:23 — His mercies are new every ___.",
+"o": [
+"day",
+"morning",
+"hour",
+"week"
+],
+"a": 1,
+"c": "Edifying",
+"n": "Fresh mercy waits each morning.",
+"r": "Lamentations 3:22-23.",
+"p": "Lamentations mourns Jerusalem's fall — yet hope breaks through."
+}
+]
+}
