@@ -1,5 +1,6 @@
 import curated from "@/data/questions.curated.json";
 import bible from "@/data/bible.json";
+import edifyingGen from "@/data/questions.edifying.json";
 import { pointerForGenerated } from "@/lib/pointers";
 
 // To go from ~hundreds to tens of thousands of questions, replace
@@ -22,6 +23,13 @@ export type Question = {
 type Verse = { book: string; chapter: number; verse: number; text: string };
 
 const CURATED = curated as Record<string, Question[]>;
+const EDIFYING_GEN = edifyingGen as Question[];
+// Edifying draws from the 30 hand-written devotional questions plus ~970
+// complete-the-verse questions generated from beloved BSB passages.
+const POOLS: Record<string, Question[]> = {
+  ...CURATED,
+  edifying: [...(CURATED["edifying"] ?? []), ...EDIFYING_GEN],
+};
 const VERSES = bible as Verse[];
 const BOOKS = [...new Set(VERSES.map((v) => v.book))];
 
@@ -176,7 +184,7 @@ function pickGenerated(): Question | null {
 
 /** Returns a fresh batch, optionally excluding questions this account has already seen. */
 export function getBatch(category: string, count = 12, exclude?: Set<string>): Question[] {
-  const curatedPool = CURATED[category] ?? CURATED["med"];
+  const curatedPool = POOLS[category] ?? POOLS["med"];
   const genChance = category === "med" || category === "hard" ? 0.9 : 0;
   const out: Question[] = [];
   const used = new Set<string>();
