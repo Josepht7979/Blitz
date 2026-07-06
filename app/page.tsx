@@ -239,7 +239,7 @@ export default function Page() {
   if (screen === "game" && G.cur) {
     const c = G.cur, frac = Math.max(0, remaining) / (secs() * 1000);
     return (
-      <div className="app">
+      <div className="app game">
         <div className="hud">
           <div className="lives">{"❤".repeat(G.lives)}{"🖤".repeat(Math.max(0, G.maxLives - G.lives))}</div>
           <div className="score-wrap"><div className="score-label">Score</div><div className="score">{G.score.toLocaleString()}</div></div>
@@ -256,8 +256,10 @@ export default function Page() {
             {c.generated && <span className="chip gen">✦ Generated</span>}
             {G.golden && <span className="chip gold">✦ Golden Verse · 2×</span>}
           </div>
-          <div className="question">{c.q}{c.verse && <span className="verse">{c.verse}</span>}</div>
-          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
+          <div className="qscroll">
+            <div className="question">{c.q}{c.verse && <span className="verse">{c.verse}</span>}</div>
+            {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
+          </div>
           <div className="opts">
             {c.o.map((t, i) => {
               let cls = "opt"; let mark = "";
@@ -276,7 +278,7 @@ export default function Page() {
             </div>
           )}
         </div>
-        <button className="btn ghost" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
+        <button className="btn ghost endrun" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
       </div>
     );
   }
