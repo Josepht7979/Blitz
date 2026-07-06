@@ -5,7 +5,7 @@ type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: stri
 type Entry = { name: string; score: number };
 
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
-  med:      { name: "The Word", desc: "For the regular reader", time: 20, color: "#ffd166" },
+  med:      { name: "The Word", desc: "For the regular reader", time: 25, color: "#ffd166" },
   edifying: { name: "Edifying", desc: "Grow, don't just guess", time: 25, color: "#8ab4ff" },
 };
 const RANKS = [
@@ -35,11 +35,14 @@ export default function Page() {
   const [remaining, setRemaining] = useState(1);
   const deadline = useRef(0);
   const tick = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [revealPct, setRevealPct] = useState(0);
+  const revealTick = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const mult = () => Math.min(8, 1 + Math.floor(G.combo / 3));
   const secs = () => CATS[cat].time;
 
   function stopTimer() { if (tick.current) { clearInterval(tick.current); tick.current = null; } }
+  function stopReveal() { if (revealTick.current) { clearInterval(revealTick.current); revealTick.current = null; } }
   function startTimer() {
     deadline.current = performance.now() + secs() * 1000;
     stopTimer();
@@ -49,7 +52,7 @@ export default function Page() {
       if (ms <= 0) { stopTimer(); if (!G.locked) answer(-1); }
     }, 80);
   }
-  useEffect(() => () => stopTimer(), []);
+  useEffect(() => () => { stopTimer(); stopReveal(); }, []);
 
   async function fetchBatch(): Promise<Q[]> {
     try {
@@ -122,8 +125,15 @@ export default function Page() {
       G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}`;
     }
     force();
-    const wait = correct ? 1100 : 1800;
-    setTimeout(() => { G.lives <= 0 ? gameOver() : nextQuestion(); }, wait);
+    // Kahoot-style: hold the reveal for 2s while a bar fills toward the next question
+    setRevealPct(0);
+    stopReveal();
+    const startAt = performance.now(), DUR = 2000;
+    revealTick.current = setInterval(() => {
+      const p = Math.min(100, ((performance.now() - startAt) / DUR) * 100);
+      setRevealPct(p);
+      if (p >= 100) { stopReveal(); G.lives <= 0 ? gameOver() : nextQuestion(); }
+    }, 30);
   }
 
   async function gameOver() {
@@ -236,6 +246,12 @@ export default function Page() {
             })}
           </div>
           <div className="note" dangerouslySetInnerHTML={{ __html: G.note || "&nbsp;" }} />
+          {G.locked && (
+            <div className="nextwrap">
+              <span className="nextlabel">Next question…</span>
+              <div className="nextbar"><div style={{ width: `${revealPct}%` }} /></div>
+            </div>
+          )}
         </div>
         <button className="btn ghost" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
       </div>
