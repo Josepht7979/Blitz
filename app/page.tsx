@@ -38,6 +38,7 @@ export default function Page() {
   const tick = useRef<ReturnType<typeof setInterval> | null>(null);
   const [revealPct, setRevealPct] = useState(0);
   const revealTick = useRef<ReturnType<typeof setInterval> | null>(null);
+  const qscrollRef = useRef<HTMLDivElement>(null);
 
   const mult = () => Math.min(8, 1 + Math.floor(G.combo / 3));
   const secs = () => CATS[cat].time;
@@ -119,6 +120,7 @@ export default function Page() {
     setRemaining(secs() * 1000);
     startTimer();
     force();
+    requestAnimationFrame(() => { if (qscrollRef.current) qscrollRef.current.scrollTop = 0; });
   }
 
   function answer(choice: number) {
@@ -141,7 +143,9 @@ export default function Page() {
       G.note = `<b>Answer:</b> ${G.cur.o[G.cur.a]} — ${G.cur.n}${ref}${ls}`;
     }
     force();
-    // Kahoot-style: hold the reveal for 2s while a bar fills toward the next question
+    // reveal the learning note (scroll the verse area to it — contained, no page jump)
+    setTimeout(() => { const el = qscrollRef.current; if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" }); }, 60);
+    // hold the reveal for 2s while the top bar drains toward the next question
     setRevealPct(0);
     stopReveal();
     const startAt = performance.now(), DUR = 2000;
@@ -249,7 +253,7 @@ export default function Page() {
           <div className="combo-info"><div className="mult">×{mult()}</div><div className="streak">{G.combo === 0 ? "No streak yet" : `${G.combo} in a row`}</div></div>
           <div className="center"><div className="tnum">{Math.ceil(frac * secs())}</div></div>
         </div>
-        <div className="tbar"><div style={{ width: `${frac * 100}%` }} /></div>
+        <div className={"tbar" + (G.locked ? " reveal" : "")}><div style={{ width: `${G.locked ? 100 - revealPct : frac * 100}%` }} /></div>
         <div className="q-card">
           <div className="q-meta">
             <span className="chip">{c.c}</span>
@@ -257,7 +261,7 @@ export default function Page() {
             {G.golden && <span className="chip gold">✦ Golden Verse · 2×</span>}
           </div>
           <div className="question">{c.q}</div>
-          <div className="qscroll">
+          <div className="qscroll" ref={qscrollRef}>
             {c.verse && <div className="verse">{c.verse}</div>}
             {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
           </div>
@@ -272,12 +276,6 @@ export default function Page() {
               return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span className="opt-text">{t}</span>{mark && <span className="mark">{mark}</span>}</button>;
             })}
           </div>
-          {G.locked && (
-            <div className="nextwrap">
-              <span className="nextlabel">Next question in…</span>
-              <div className="nextbar"><div style={{ width: `${100 - revealPct}%` }} /></div>
-            </div>
-          )}
         </div>
         <button className="btn ghost endrun" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
       </div>
