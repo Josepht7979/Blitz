@@ -79,6 +79,7 @@ h1.brand{font-weight:800;font-size:2.3rem;text-align:center;margin-top:4px;
 .opt.dim{opacity:.4;}
 .note{text-align:left;color:var(--ink);font-size:.92rem;line-height:1.5;background:#fff;border:1px solid var(--line);border-left:4px solid var(--flame2);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);}
 .note b{color:var(--gold);} .note .ref{color:#3730a3;font-style:italic;}
+.note .pointer{display:block;margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);font-size:.82rem;font-style:italic;color:#6b6357;line-height:1.4;}
 .center{text-align:center;}
 .rank-emoji{font-size:3rem;} .rank-name{font-family:Cinzel,serif;font-weight:800;font-size:1.5rem;color:var(--gold);}
 .final{font-family:Anton;font-size:3.8rem;line-height:.9;}
