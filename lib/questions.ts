@@ -31,7 +31,11 @@ const VOCAB = [...new Set(
 )];
 
 // Capitalized words that are NOT names (sentence starters, pronouns, common terms).
-const NAME_STOP = new Set(["The","And","But","For","Then","Now","So","When","Who","What","Why","How","Where","Behold","Therefore","Thus","Yet","Truly","Amen","God","Lord","LORD","He","She","They","We","You","Do","Let","May","This","That","These","Those","Blessed","Woe","Selah","Then","There","Here","Come","Go","See","Hear","Take","Give"]);
+const NAME_STOP = new Set(["The","And","But","For","Then","Now","So","When","Who","What","Why","How","Where","Behold","Therefore","Thus","Yet","Truly","Amen","God","Lord","LORD","He","She","It","They","We","You","I","Do","Does","Did","Let","May","Shall","Will","Would","Should","Could","Can","This","That","These","Those","Blessed","Woe","Selah","There","Here","Come","Go","See","Hear","Take","Give","Know","Say","Said",
+  "His","Him","Her","Hers","Its","Our","Ours","Us","Their","Theirs","Them","Your","Yours","My","Mine","Me","Whom","Whose","Himself","Herself","Itself","Myself","Ourselves","Yourself","Yourselves","Themselves",
+  "Thou","Thee","Thy","Thine","Ye",
+  "Father","Son","Spirit","Holy","Almighty","Most","High","King","Master","Savior","Saviour","Redeemer","Messiah","Shepherd","Hosts",
+  "One","Two","Three","Yes","No","Send","Since","Also","Even","Only","Just","Again","Indeed","Surely","Yea","Nay","Lo","Oh","If","As","Because","While","Whether","Though","Although","Unless","However","Moreover","Nevertheless","Nor","Or","Every","Each","All","Any","Some","Many","None","Both","Either","Neither","Whoever","Whatever","Wherever","Whenever","Anyone","Everyone","Someone","Nothing","Everything","Something","Great","Good","New","Old","First","Last","Well","Away","Make","Went","Came","Saw","Way","Bring","Rise","Arise","Return","Remember","Consider","Look","Turn","Wait","Cry","Sing","Praise","Fear","Trust","Hope","Rejoice","Peace","Grace","Truth","Life","Death","Light","Love","Word","Faith","Glory","Mercy","Sin","Soul","Heart","Wisdom","Salvation","Righteousness","Hallelujah","Day","Night","Earth","Heaven","Cursed","Prophets","Priests"]);
 
 function extractNames(text: string): string[] {
   const words = text.split(/\s+/);
@@ -43,7 +47,11 @@ function extractNames(text: string): string[] {
   }
   return out;
 }
-const NAMES = [...new Set(VERSES.flatMap((v) => extractNames(v.text)))];
+const _nameFreq: Record<string, number> = {};
+for (const v of VERSES) for (const n of extractNames(v.text)) _nameFreq[n] = (_nameFreq[n] || 0) + 1;
+// only names that appear often enough to be recognizable (no one-off genealogy names)
+const NAMES = Object.keys(_nameFreq).filter((n) => _nameFreq[n] >= 5);
+const NAMES_SET = new Set(NAMES);
 
 function shuffle<T>(a: T[]): T[] {
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
@@ -111,7 +119,7 @@ function genFillName(): Question | null {
     for (let i = 1; i < words.length; i++) {
       if (/[.!?;:"”'’]$/.test(words[i - 1])) continue;
       const name = words[i].replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "");
-      if (name.length >= 3 && /^[A-Z][a-z]/.test(name) && !NAME_STOP.has(name)) {
+      if (name.length >= 3 && /^[A-Z][a-z]/.test(name) && NAMES_SET.has(name)) {
         cands.push({ w: words[i], i, name });
       }
     }
