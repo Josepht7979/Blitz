@@ -19,7 +19,7 @@ body{
 .app.start{justify-content:safe center;gap:15px;padding-bottom:calc(env(safe-area-inset-bottom) + 24px);}
 .app.game{gap:8px;}
 .topbar{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;flex-direction:column;gap:8px;padding-top:calc(env(safe-area-inset-top) + 6px);margin-top:calc(-1 * (env(safe-area-inset-top) + 14px));padding-bottom:8px;box-shadow:0 8px 12px -10px rgba(20,26,45,.3);}
-.app.game .q-card{display:flex;flex-direction:column;gap:9px;}
+.app.game .q-card{flex:0 0 auto;display:flex;flex-direction:column;gap:9px;justify-content:flex-start;}
 .endrun{padding:9px;font-size:.86rem;margin-top:2px;}
 .app.start .cats{margin-top:4px;}
 .brand{font-family:Cinzel,serif;letter-spacing:.05em;}

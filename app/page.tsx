@@ -5,8 +5,8 @@ type Q = { q: string; verse?: string; o: string[]; a: number; c: string; n: stri
 type Entry = { name: string; score: number };
 
 const CATS: Record<string, { name: string; desc: string; time: number; color: string }> = {
-  med:      { name: "The Word", desc: "For the regular reader", time: 25, color: "#ffd166" },
-  edifying: { name: "Edifying", desc: "Grow, don't just guess", time: 25, color: "#8ab4ff" },
+  med:      { name: "Full Armour", desc: "For the regular reader", time: 25, color: "#ffd166" },
+  edifying: { name: "Living Water", desc: "Grow, don't just guess", time: 25, color: "#8ab4ff" },
 };
 const RANKS = [
   { min: 0, e: "💨", n: "A Spark" }, { min: 1500, e: "🪵", n: "Kindling" },
@@ -261,7 +261,6 @@ export default function Page() {
           </div>
           <div className="question">{c.q}</div>
           {c.verse && <div className="verse">{c.verse}</div>}
-          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
           <div className="opts">
             {c.o.map((t, i) => {
               let cls = "opt"; let mark = "";
@@ -273,6 +272,7 @@ export default function Page() {
               return <button key={i} className={cls} onClick={() => answer(i)}><span className="key">{i + 1}</span><span className="opt-text">{t}</span>{mark && <span className="mark">{mark}</span>}</button>;
             })}
           </div>
+          {G.locked && G.note && <div className="note" dangerouslySetInnerHTML={{ __html: G.note }} />}
         </div>
         <button className="btn ghost endrun" onClick={() => { stopTimer(); gameOver(); }}>End run ✕</button>
       </div>
