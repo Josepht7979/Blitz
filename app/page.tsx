@@ -145,7 +145,7 @@ export default function Page() {
     // hold the reveal for 2s while the top bar drains toward the next question
     setRevealPct(0);
     stopReveal();
-    const startAt = performance.now(), DUR = 2000;
+    const startAt = performance.now(), DUR = cat === "edifying" ? 3000 : 2000;
     revealTick.current = setInterval(() => {
       const p = Math.min(100, ((performance.now() - startAt) / DUR) * 100);
       setRevealPct(p);
