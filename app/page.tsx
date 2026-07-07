@@ -218,8 +218,7 @@ export default function Page() {
   /* ---------- render ---------- */
   if (screen === "start") return (
     <div className="app start">
-      <img src="/word-warriors.png" alt="Word Warriors" className="logo-img" />
-      <p className="tag">How well do you know the Word?</p>
+      <img src="/word-warriors.jpeg" alt="Word Warriors — how well do you know the Word?" className="logo-img" />
       <div className="field">
         <label htmlFor="nm">Your name (shown on the leaderboard)</label>
         <input id="nm" className="nameInput" maxLength={16} value={name}
