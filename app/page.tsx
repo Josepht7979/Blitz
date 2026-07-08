@@ -303,7 +303,7 @@ export default function Page() {
 
   // board
   return (
-    <div className="app">
+    <div className="app board">
       <div className="hud"><h1 className="brand" style={{ fontSize: "1.4rem" }}>🏆 Leaderboards</h1>
         <button className="btn ghost" style={{ width: "auto", padding: "8px 14px" }} onClick={() => setScreen("start")}>Home</button></div>
       <div className="tabs">
